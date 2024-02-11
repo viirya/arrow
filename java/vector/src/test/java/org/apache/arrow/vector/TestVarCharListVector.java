@@ -45,6 +45,14 @@ public class TestVarCharListVector {
   }
 
   @Test
+  public void testEmptyVarCharList() {
+    ListVector vector = new ListVector("VarList", allocator,
+            FieldType.nullable(Types.MinorType.VARCHAR.getType()), null);
+    Assert.assertEquals(4, vector.getOffsetBuffer().capacity());
+    vector.close();
+  }
+
+  @Test
   public void testVarCharListWithNulls() {
     byte[] bytes = "a".getBytes(StandardCharsets.UTF_8);
     try (ListVector vector = new ListVector("VarList", allocator, FieldType.nullable(Types

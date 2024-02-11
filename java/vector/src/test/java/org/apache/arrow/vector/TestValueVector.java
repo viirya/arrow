@@ -315,6 +315,13 @@ public class TestValueVector {
     }
   }
 
+  @Test
+  public void testEmptyVarCharVector() {
+    VarCharVector vector = new VarCharVector(EMPTY_SCHEMA_PATH, allocator);
+    assertEquals(4, vector.getOffsetBuffer().capacity());
+    vector.close();
+  }
+
   @Test /* VarCharVector */
   public void testSizeOfValueBuffer() {
     try (final VarCharVector vector = new VarCharVector(EMPTY_SCHEMA_PATH, allocator)) {
@@ -3216,7 +3223,7 @@ public class TestValueVector {
       assertEquals(1, vector.getOffsetBuffer().refCnt());
       assertEquals(0, vector.getDataBuffer().capacity());
       assertEquals(0, vector.getValidityBuffer().capacity());
-      assertEquals(0, vector.getOffsetBuffer().capacity());
+      assertEquals(4, vector.getOffsetBuffer().capacity());
 
       vector.allocateNew(valueCount);
       assertEquals(1, vector.getDataBuffer().refCnt());
@@ -3239,7 +3246,7 @@ public class TestValueVector {
       assertEquals(1, vector.getValidityBuffer().refCnt());
       assertEquals(1, vector.getOffsetBuffer().refCnt());
       assertEquals(0, vector.getValidityBuffer().capacity());
-      assertEquals(0, vector.getOffsetBuffer().capacity());
+      assertEquals(4, vector.getOffsetBuffer().capacity());
 
       vector.setValueCount(valueCount);
       vector.allocateNewSafe();

@@ -68,7 +68,8 @@ public abstract class BaseRepeatedValueVector extends BaseValueVector implements
   protected BaseRepeatedValueVector(String name, BufferAllocator allocator, FieldVector vector, CallBack callBack) {
     super(allocator);
     this.name = name;
-    this.offsetBuffer = allocator.getEmpty();
+    // According to Arrow spec, the offsets buffer contains length + 1 elements
+    allocateOffsetBuffer(OFFSET_WIDTH);
     this.vector = Preconditions.checkNotNull(vector, "data vector cannot be null");
     this.repeatedCallBack = callBack;
     this.valueCount = 0;

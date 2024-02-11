@@ -69,6 +69,13 @@ public class TestLargeVarCharVector {
   }
 
   @Test
+  public void testEmptyLargeVarCharVector() {
+    LargeVarCharVector vector = new LargeVarCharVector("empty", allocator);
+    assertEquals(8, vector.getOffsetBuffer().capacity());
+    vector.close();
+  }
+
+  @Test
   public void testTransfer() {
     try (BufferAllocator childAllocator1 = allocator.newChildAllocator("child1", 1000000, 1000000);
          BufferAllocator childAllocator2 = allocator.newChildAllocator("child2", 1000000, 1000000);
